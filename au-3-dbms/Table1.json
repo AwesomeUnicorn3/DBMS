@@ -1,0 +1,47 @@
+{
+ "COLUMN": {
+  "Column1": {
+   "datatype": 1.0,
+   "display_order": 1.0,
+   "is_unique": true
+  },
+  "Column2": {
+   "datatype": 2.0,
+   "display_order": 2.0,
+   "is_unique": true
+  },
+  "Column3": {
+   "datatype": 3.0,
+   "display_order": 3.0,
+   "is_unique": true
+  },
+  "Column4": {
+   "datatype": 4.0,
+   "display_order": 4.0,
+   "is_unique": true
+  }
+ },
+ "ROW": {
+  "Key2": {
+   "Column1": true,
+   "Column2": 25.0,
+   "Column3": 4.0,
+   "Column4": "fartFartFart",
+   "display_order": 1.0
+  },
+  "Key3": {
+   "Column1": 1.0,
+   "Column2": 1.0,
+   "Column3": 4.0,
+   "Column4": 4.0,
+   "display_order": 2.0
+  },
+  "Key4": {
+   "Column1": 1.0,
+   "Column2": 1.0,
+   "Column3": 4.0,
+   "Column4": 4.0,
+   "display_order": 3.0
+  }
+ }
+}

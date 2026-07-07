@@ -1,0 +1,2 @@
+class_name CellGrid
+extends GridContainer

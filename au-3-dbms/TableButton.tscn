@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://16mv85b742gj"]
+
+[ext_resource type="Script" uid="uid://cb2ix5dcgsxud" path="res://table_button.gd" id="1_6niiv"]
+
+[node name="TableButton" type="Button" unique_id=515142586]
+custom_minimum_size = Vector2(100, 50)
+script = ExtResource("1_6niiv")

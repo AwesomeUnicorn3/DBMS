@@ -1,0 +1,23 @@
+{
+ "COLUMN": {
+  "DEFAULT_FIRST_COLUMN_NAME": {
+   "datatype": 3.0,
+   "display_order": 1.0,
+   "is_unique": true
+  }
+ },
+ "ROW": {
+  "Table1": {
+   "DEFAULT_FIRST_COLUMN_NAME": "Default Name",
+   "display_order": 2.0
+  },
+  "Table2": {
+   "DEFAULT_FIRST_COLUMN_NAME": "Default Name",
+   "display_order": 3.0
+  },
+  "TableList": {
+   "DEFAULT_FIRST_COLUMN_NAME": "Default Name",
+   "display_order": 1.0
+  }
+ }
+}

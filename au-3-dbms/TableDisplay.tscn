@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://ds4w02h7jfhjr"]
+
+[ext_resource type="Script" uid="uid://dhtsqfr365umm" path="res://table_display.gd" id="1_2lw2n"]
+[ext_resource type="PackedScene" uid="uid://c5bgsr61uyeti" path="res://Cell.tscn" id="2_2lw2n"]
+[ext_resource type="Script" uid="uid://w75xwt7td2bw" path="res://cell_grid.gd" id="2_fnhx8"]
+
+[node name="TableDisplay" type="Control" unique_id=90434462]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_2lw2n")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1693870017]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="EditorBar" type="TextEdit" parent="VBoxContainer" unique_id=410762178]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+placeholder_text = "LARGER INPUT DISPLAY FOR SELECTED FIELD"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer" unique_id=377497179]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Vbox" type="VBoxContainer" parent="VBoxContainer/ScrollContainer" unique_id=117034512]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="CellGrid" type="GridContainer" parent="VBoxContainer/ScrollContainer/Vbox" unique_id=1871150079]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 6
+script = ExtResource("2_fnhx8")
+
+[node name="BlankCell" parent="VBoxContainer/ScrollContainer/Vbox/CellGrid" unique_id=1438292168 instance=ExtResource("2_2lw2n")]
+layout_mode = 2
+placeholder_text = ""
+editable = false
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]

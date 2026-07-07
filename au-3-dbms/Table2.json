@@ -1,0 +1,15 @@
+{
+ "COLUMN": {
+  "DEFAULT_FIRST_COLUMN_NAME": {
+   "datatype": 3.0,
+   "display_order": 1.0,
+   "is_unique": true
+  }
+ },
+ "ROW": {
+  "DEFAULT_FIRST_KEY_NAME": {
+   "DEFAULT_FIRST_COLUMN_NAME": "Default Name",
+   "display_order": 1.0
+  }
+ }
+}

@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://dyn1ohyb8gtj4"]
+
+[ext_resource type="Script" uid="uid://c1akec8jyx7n4" path="res://table_navigation.gd" id="1_x3wkh"]
+
+[node name="TableNavigation" type="VBoxContainer" unique_id=2109710735]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_x3wkh")
+
+[node name="TableButtonScroll" type="ScrollContainer" parent="." unique_id=737679106]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="TableButtons" type="HBoxContainer" parent="TableButtonScroll" unique_id=379769488]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
