@@ -1,22 +1,22 @@
 {
  "COLUMN": {
   "Column1": {
-   "datatype": 1.0,
+   "datatype": "TextInputCell",
    "display_order": 1.0,
    "is_unique": true
   },
   "Column2": {
-   "datatype": 2.0,
+   "datatype": "TextInputCell",
    "display_order": 2.0,
    "is_unique": true
   },
   "Column3": {
-   "datatype": 3.0,
+   "datatype": "TextInputCell",
    "display_order": 3.0,
    "is_unique": true
   },
   "Column4": {
-   "datatype": 4.0,
+   "datatype": "TextInputCell",
    "display_order": 4.0,
    "is_unique": true
   }

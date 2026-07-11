@@ -1,35 +1,52 @@
 class_name TableDisplay
 extends Control
 
-@onready var editor_bar: TextEdit = %EditorBar
+@onready var table_name_display: Label = %TableNameDisplay
 @onready var cell_grid: CellGrid = $VBoxContainer/ScrollContainer/Vbox/CellGrid
-var cell: Resource = load("res://Cell.tscn")
 
-var table_name: String = ""
+
+#PLACEHOLDER UNTIL I CREATE UNIQUE COLUMN AND KEY NODES
+var cell: Resource = load("res://TextInputCell.tscn")
+
 var table_data: Dictionary = {}
+var table_name: String = ""
 
 
-func populate_key() -> void:
-	pass
+func load_table_data(tbl_name: String, tbl_data: Dictionary) -> void:
+	set_table_name(tbl_name)
+	set_table_data(tbl_data)
+	populate_cells()
 
 
-func add_cell_to_grid() -> Cell:
+func set_table_name(tbl_name: String) -> void:
+	table_name_display.set_text(tbl_name)
+	table_name = tbl_name
+
+
+func add_cell_to_grid(cell_type: String) -> Cell:
+	var datatype_cell: Resource = load("res://" + cell_type + ".tscn")
+	var new_cell: Cell = datatype_cell.instantiate()
+	cell_grid.add_child(new_cell)
+	return new_cell
+
+
+func add_column_header_to_grid() -> Cell:
+	#NEED TO CREATE UNIQUE NODE FOR COLUMNS
 	var new_cell: Cell = cell.instantiate()
 	cell_grid.add_child(new_cell)
 	return new_cell
 
 
-func add_key_to_grid() -> Cell:
-	#SAME AS ADD CELL UNTIL I CREATE SPECIAL DISP.AY FOR KEYS
+func create_and_add_key_to_grid() -> Cell:
+	#NEED TO CREATE UNIQUE NODE FOR KEYS
 	var new_cell: Cell = cell.instantiate()
 	cell_grid.add_child(new_cell)
 	return new_cell
-
 
 
 func populate_column_headers() -> void:
 	for column in table_data[DBManager.COLUMN]:
-		add_cell_to_grid().text = column
+		add_column_header_to_grid().set_value(column)
 
 
 func populate_cells() -> void:
@@ -39,21 +56,22 @@ func populate_cells() -> void:
 	populate_column_headers()
 	#START WITH FIRST KEY, LOOP THROUGH COLUMNS, GO TO NEXT KEY
 	for key in table_data[DBManager.ROW]:
-		add_key_to_grid().text = key
-		print("ROW: ", key)
+		create_and_add_key_to_grid().set_value(key)
+		#print("ROW: ", key)
 		for column in table_data[DBManager.COLUMN]:
-			add_cell_to_grid().text = str(table_data[DBManager.ROW][key][column])
-			print("COLUMN: ", column)
+			#SHOULD ADD "DATATYPE" IN DBMANAGER CLASS
+			var datatype: String = table_data[DBManager.COLUMN][column]["datatype"]
+			#WHAT IS THE BEST WAY TO DETERMINE WHAT TYPE OF INPUT CELL NEEDS TO BE SPAWNED?
+			add_cell_to_grid(datatype).set_value(str(table_data[DBManager.ROW][key][column]))
+			#print("COLUMN: ", column)
 
 
 func get_column_count() -> int:
 	return table_data[DBManager.COLUMN].size()
 
+
 func set_cell_data() -> void:
 	pass
-
-func connect_editor_bar_to_cell(cell: Cell) -> void:
-	print("CELL VALUE: ", cell.text)
 
 
 func save_table_data() -> void:
@@ -67,4 +85,5 @@ func set_table_data(data_dict: Dictionary) -> void:
 
 
 func _on_visibility_changed() -> void:
-	print("ACTIVE TABLE DATA: ", table_data)
+	pass
+	#print("ACTIVE TABLE DATA: ", table_data)

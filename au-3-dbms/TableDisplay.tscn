@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://ds4w02h7jfhjr"]
 
 [ext_resource type="Script" uid="uid://dhtsqfr365umm" path="res://table_display.gd" id="1_2lw2n"]
-[ext_resource type="PackedScene" uid="uid://c5bgsr61uyeti" path="res://Cell.tscn" id="2_2lw2n"]
 [ext_resource type="Script" uid="uid://w75xwt7td2bw" path="res://cell_grid.gd" id="2_fnhx8"]
 
 [node name="TableDisplay" type="Control" unique_id=90434462]
@@ -25,11 +24,12 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="EditorBar" type="TextEdit" parent="VBoxContainer" unique_id=410762178]
+[node name="TableNameDisplay" type="Label" parent="VBoxContainer" unique_id=761205023]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 100)
+custom_minimum_size = Vector2(0, 25)
 layout_mode = 2
-placeholder_text = "LARGER INPUT DISPLAY FOR SELECTED FIELD"
+text = "TABLE NAME"
+horizontal_alignment = 1
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer" unique_id=377497179]
 layout_mode = 2
@@ -47,9 +47,11 @@ size_flags_vertical = 3
 columns = 6
 script = ExtResource("2_fnhx8")
 
-[node name="BlankCell" parent="VBoxContainer/ScrollContainer/Vbox/CellGrid" unique_id=1438292168 instance=ExtResource("2_2lw2n")]
+[node name="BlankCell" type="ColorRect" parent="VBoxContainer/ScrollContainer/Vbox/CellGrid" unique_id=1008589138]
+custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
-placeholder_text = ""
-editable = false
+size_flags_horizontal = 0
+size_flags_vertical = 0
+color = Color(0, 0, 0, 1)
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]

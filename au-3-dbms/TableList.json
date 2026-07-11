@@ -1,7 +1,7 @@
 {
  "COLUMN": {
   "DEFAULT_FIRST_COLUMN_NAME": {
-   "datatype": 3.0,
+   "datatype": "TextInputCell",
    "display_order": 1.0,
    "is_unique": true
   }

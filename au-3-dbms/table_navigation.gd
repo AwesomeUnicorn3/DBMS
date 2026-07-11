@@ -28,17 +28,14 @@ func add_table_buttons() -> void:
 func update_table(button):
 	active_table_name = button.get_text()
 	activate_table(active_table_name)
-	print("ACTIVE TABLE NAME: ", active_table_name)
 
 
 func load_table_template(table_name: String) -> TableDisplay:
 	var new_table_display: Control = table_template.instantiate()
 	self.add_child(new_table_display)
-	new_table_display.set_name(table_name)
-	new_table_display.editor_bar.text = table_name #DELETE ME
+	new_table_display.load_table_data(table_name, DB_copy[table_name])
 	open_table_dict[table_name] = new_table_display
-	new_table_display.set_table_data(DB_copy[table_name])
-	new_table_display.populate_cells()
+	
 	return new_table_display
 
 
