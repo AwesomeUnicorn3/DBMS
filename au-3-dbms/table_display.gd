@@ -27,6 +27,7 @@ func add_cell_to_grid(cell_type: String) -> Cell:
 	var datatype_cell: Resource = load("res://" + cell_type + ".tscn")
 	var new_cell: Cell = datatype_cell.instantiate()
 	cell_grid.add_child(new_cell)
+	new_cell.on_cell_value_updated.connect(update_cell_value_in_table,1)
 	return new_cell
 
 
@@ -62,8 +63,24 @@ func populate_cells() -> void:
 			#SHOULD ADD "DATATYPE" IN DBMANAGER CLASS
 			var datatype: String = table_data[DBManager.COLUMN][column]["datatype"]
 			#WHAT IS THE BEST WAY TO DETERMINE WHAT TYPE OF INPUT CELL NEEDS TO BE SPAWNED?
-			add_cell_to_grid(datatype).set_value(str(table_data[DBManager.ROW][key][column]))
+			var new_cell: Cell = add_cell_to_grid(datatype)
+			new_cell.set_value(str(table_data[DBManager.ROW][key][column]))
+			new_cell.set_cell_address(key,column)
+			
 			#print("COLUMN: ", column)
+
+
+func update_cell_value_in_table(updated_cell: Cell) -> void:
+	#LATER I WANT TO SET THIS INFORMATION TO AN "UPDATED VALUES" DICT
+	#AND ONLY MOVE THE INFORMATION TO THE MAIN DB WHEN SAVE IS CALLED
+	#THIS WORKS FOR NOW THOUGH
+	 
+	var row: String = updated_cell.cell_key
+	var column: String = updated_cell.cell_column
+	
+	table_data[DBManager.ROW][row][column] = updated_cell.get_value()
+
+
 
 
 func get_column_count() -> int:
@@ -74,8 +91,10 @@ func set_cell_data() -> void:
 	pass
 
 
-func save_table_data() -> void:
-	pass
+func save_data() -> Dictionary:
+	#CURRENTLY TABLE_DATA IS UPDATED WHEN CELL DATA IS CHANGED
+	#EVENTUALLY I WANT IT TO ONL
+	return table_data
 
 
 func set_table_data(data_dict: Dictionary) -> void:

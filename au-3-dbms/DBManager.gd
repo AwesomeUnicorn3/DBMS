@@ -242,11 +242,19 @@ func delete_file_from_disk(file_name: String, file_extension: String) -> bool:
 	return success
 
 
+func update_main_db(new_db_dict: Dictionary, save_to_disk: bool = true) -> void:
+	#I WANT TO UPDATE THIS WHERE YOU CAN PASS IN ONLY TABLES THAT WERE
+	#UPDATED SINCE LAST SAVE. NOT REALLY WORTH THE EFFORT RIGHT NOW
+	main_db = new_db_dict.duplicate_deep()
+	if save_to_disk:
+		save_database()
+
+
 func save_database() -> bool:
 	var success: bool = true
 	for tbl in main_db.keys():
 		if !save_file_to_disk(tbl):
-			print("ERROR: TABLE NOT SAVED. CONTINUING WITH NEXT TABLE")
+			print("ERROR: ", tbl, " NOT SAVED. CONTINUING WITH NEXT TABLE")
 	
 	return success
 

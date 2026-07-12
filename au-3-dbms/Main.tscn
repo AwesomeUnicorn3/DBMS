@@ -12,7 +12,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color(0.56609577, 0.6733743, 0.7695423, 1)
+color = Color(0.018266678, 0.011169434, 0.23828125, 1)
 script = ExtResource("1_glv2v")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1327935436]
@@ -23,7 +23,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="VBoxContainer" unique_id=400179237]
+[node name="ProjectNameLabel" type="Label" parent="VBoxContainer" unique_id=400179237]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 text = "AU3 DBMS"
@@ -37,13 +37,18 @@ layout_mode = 2
 [node name="ProgramControls" type="HBoxContainer" parent="VBoxContainer" unique_id=25402712]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/ProgramControls" unique_id=834136260]
+[node name="SaveButton" parent="VBoxContainer/ProgramControls" unique_id=515142586 instance=ExtResource("2_r0du0")]
+unique_name_in_owner = true
+layout_mode = 2
+text = "SAVE"
+
+[node name="Spacer" type="Label" parent="VBoxContainer/ProgramControls" unique_id=834136260]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "PROGRAM LEVEL CONTROLS"
 horizontal_alignment = 1
 
-[node name="ExitButton" parent="VBoxContainer/ProgramControls" unique_id=515142586 instance=ExtResource("2_r0du0")]
+[node name="ExitButton" parent="VBoxContainer/ProgramControls" unique_id=1800463883 instance=ExtResource("2_r0du0")]
+unique_name_in_owner = true
 layout_mode = 2
 text = "EXIT"
 

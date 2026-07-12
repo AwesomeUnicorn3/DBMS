@@ -17,6 +17,12 @@ func set_table_data(data_dict: Dictionary) -> void:
 	DB_copy = data_dict.duplicate_deep()
 
 
+func save_table_data() -> Dictionary:
+	for tbl_nm: String in open_table_dict:
+		DB_copy[tbl_nm] = open_table_dict[tbl_nm].save_data()
+	return DB_copy
+
+
 func add_table_buttons() -> void:
 	for table: String in table_list:
 		var button: Button = button_template.instantiate()
