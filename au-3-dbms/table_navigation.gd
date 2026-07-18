@@ -8,19 +8,11 @@ extends VBoxContainer
 
 var active_table_name: String = ""
 var open_table_dict: Dictionary = {}
-#THIS IS THE MAIN DB THAT WILL BE USED TO CHANGE DATA BY ALL SCRIPTS. ONCE WE ARE READY
-#TO SAVE THE DB TO DISK, WE WILL PASS THIS ONE TO THE DBMANAGER
 var main_db: Dictionary = {}
 
 
 func set_table_data(data_dict: Dictionary) -> void:
 	main_db = data_dict
-
-
-func save_table_data() -> Dictionary:
-	for tbl_nm: String in open_table_dict:
-		main_db[tbl_nm] = open_table_dict[tbl_nm].save_data()
-	return main_db
 
 
 func add_table_buttons() -> void:

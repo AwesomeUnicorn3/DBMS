@@ -8,7 +8,7 @@
  },
  "ROW": {
   "DEFAULT_FIRST_KEY_NAME": {
-   "DEFAULT_FIRST_COLUMN_NAME": "Default Name",
+   "DEFAULT_FIRST_COLUMN_NAME": "Default Value",
    "display_order": 1.0
   }
  }

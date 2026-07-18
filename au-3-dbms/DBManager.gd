@@ -19,7 +19,6 @@ func update_field(new_value: Variant, table: Dictionary, key_name: String, colum
 	var success: bool = true
 	var new_value_type: int = typeof(new_value)
 	
-	#VERIFY THAT THE TABLE, KEY, AND COLUMN PATH EXIST
 	if !table[ROW].has(key_name):
 		print("ERROR: KEY DOES NOT EXIST IN TABLE")
 		return !success
@@ -27,14 +26,12 @@ func update_field(new_value: Variant, table: Dictionary, key_name: String, colum
 	if !table[ROW][key_name].has(column_name):
 		print("ERROR: COLUMN DOES NOT EXIST IN TABLE")
 		return !success
-	
-	#VERIFY THAT new_value IS THE CORRECT DATATYPE BEFORE UPDATING
+
 	var datatype:int = table[COLUMN][column_name][DATATYPE]
 	if datatype != new_value_type:
 		print("ERROR: DATATYPES DO NOT MATCH")
 		return !success
-	
-	#UPDATE VALUE
+		
 	table[ROW][key_name][column_name] = new_value
 	
 	return success
@@ -200,11 +197,11 @@ func delete_table(table_name: String, db_dict: Dictionary, save_path, ext) -> bo
 	return success
 
 
-static func load_file(save_path, file_name, ext) -> Dictionary:
+static func load_file(save_path: String, file_name: String, ext: String) -> Dictionary:
 	var return_dict: Dictionary = {}
 	var file: FileAccess = FileAccess.open(save_path + file_name + ext, FileAccess.READ)
-	var load_json_string = file.get_as_text()
-	var json = JSON.new()
+	var load_json_string: String = file.get_as_text()
+	var json: JSON = JSON.new()
 	var parse_result: Error = json.parse(load_json_string)
 	
 	if parse_result != OK:
@@ -217,50 +214,41 @@ static func load_file(save_path, file_name, ext) -> Dictionary:
 	return return_dict
 
 
-
-static func save_file_to_disk(save_path, ext, table_name: String, db_dict: Dictionary) -> bool:
+static func save_file_to_disk(save_path: String, ext:String, table_name: String, db_dict: Dictionary) -> bool:
 	var success: bool = true
-	var save_file = FileAccess.open(save_path + table_name + ext,FileAccess.WRITE)
+	var save_file: FileAccess = FileAccess.open(save_path + table_name + ext,FileAccess.WRITE)
 	if save_file == null:
 		save_file.close()
 		print("ERROR: FILE DOES NOT EXIST AT THIS PATH OR CAN'T BE OPENED")
 		return !success
 	
-	var save_json_string = JSON.stringify(db_dict[table_name], " ")
+	var save_json_string: String = JSON.stringify(db_dict[table_name], " ")
 	save_file.store_string(save_json_string)
 	save_file.close()
 	
 	return success
 
 
-func delete_file_from_disk(save_path, file_name: String, file_extension: String) -> bool:
+func delete_file_from_disk(save_path: String, file_name: String, file_extension: String) -> bool:
 	var success: bool = DirAccess.remove_absolute(save_path + file_name + file_extension)
 	
 	return success
 
 
-#func update_main_db(new_db_dict: Dictionary, save_to_disk: bool = true) -> void:
-	#I WANT TO UPDATE THIS WHERE YOU CAN PASS IN ONLY TABLES THAT WERE
-	#UPDATED SINCE LAST SAVE. NOT REALLY WORTH THE EFFORT RIGHT NOW
-#	main_db = new_db_dict.duplicate_deep()
-#	if save_to_disk:
-#		save_database()
-
-
-static func save_database(save_dir, ext,  db_dict: Dictionary) -> bool:
+static func save_database(save_dir:String, ext: String,  db_dict: Dictionary) -> bool:
 	var success: bool = true
-	for tbl in db_dict.keys():
+	for tbl: String in db_dict.keys():
 		if !save_file_to_disk(save_dir, ext, tbl, db_dict):
 			print("ERROR: ", tbl, " NOT SAVED. CONTINUING WITH NEXT TABLE")
 	
 	return success
 
 
-static func load_database(db_dir, ext) -> Dictionary:
+static func load_database(db_dir: String, ext: String) -> Dictionary:
 	var table_list: Dictionary = load_file(db_dir, TABLE_LIST, ext)
 	var db_dict: Dictionary = {}
 	
-	for table_name in table_list[ROW].keys():
+	for table_name: String in table_list[ROW].keys():
 		db_dict[table_name]  = load_file(db_dir, table_name, ext)
 		if db_dict[table_name] == {}:
 			print("ERROR: TABLE 'TABLE NAME' IS EMPTY IN DATABASE. CONTINUING WITH NEXT TABLE")
