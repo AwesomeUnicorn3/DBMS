@@ -8,7 +8,7 @@ extends Control
 #PLACEHOLDER UNTIL I CREATE UNIQUE COLUMN AND KEY NODES
 var cell: Resource = load("res://TextInputCell.tscn")
 
-var table_data: Dictionary = {}
+var table_dict: Dictionary = {}
 var table_name: String = ""
 
 
@@ -46,7 +46,7 @@ func create_and_add_key_to_grid() -> Cell:
 
 
 func populate_column_headers() -> void:
-	for column in table_data[DBManager.COLUMN]:
+	for column in table_dict[DBManager.COLUMN]:
 		add_column_header_to_grid().set_value(column)
 
 
@@ -56,15 +56,15 @@ func populate_cells() -> void:
 	#POPULATE COLUMN HEADERS
 	populate_column_headers()
 	#START WITH FIRST KEY, LOOP THROUGH COLUMNS, GO TO NEXT KEY
-	for key in table_data[DBManager.ROW]:
+	for key in table_dict[DBManager.ROW]:
 		create_and_add_key_to_grid().set_value(key)
 		#print("ROW: ", key)
-		for column in table_data[DBManager.COLUMN]:
+		for column in table_dict[DBManager.COLUMN]:
 			#SHOULD ADD "DATATYPE" IN DBMANAGER CLASS
-			var datatype: String = table_data[DBManager.COLUMN][column]["datatype"]
+			var datatype: String = table_dict[DBManager.COLUMN][column]["datatype"]
 			#WHAT IS THE BEST WAY TO DETERMINE WHAT TYPE OF INPUT CELL NEEDS TO BE SPAWNED?
 			var new_cell: Cell = add_cell_to_grid(datatype)
-			new_cell.set_value(str(table_data[DBManager.ROW][key][column]))
+			new_cell.set_value(str(table_dict[DBManager.ROW][key][column]))
 			new_cell.set_cell_address(key,column)
 			
 			#print("COLUMN: ", column)
@@ -78,13 +78,13 @@ func update_cell_value_in_table(updated_cell: Cell) -> void:
 	var row: String = updated_cell.cell_key
 	var column: String = updated_cell.cell_column
 	
-	table_data[DBManager.ROW][row][column] = updated_cell.get_value()
+	table_dict[DBManager.ROW][row][column] = updated_cell.get_value()
 
 
 
 
 func get_column_count() -> int:
-	return table_data[DBManager.COLUMN].size()
+	return table_dict[DBManager.COLUMN].size()
 
 
 func set_cell_data() -> void:
@@ -94,13 +94,13 @@ func set_cell_data() -> void:
 func save_data() -> Dictionary:
 	#CURRENTLY TABLE_DATA IS UPDATED WHEN CELL DATA IS CHANGED
 	#EVENTUALLY I WANT IT TO ONL
-	return table_data
+	return table_dict
 
 
-func set_table_data(data_dict: Dictionary) -> void:
+func set_table_data(table_data: Dictionary) -> void:
 	#PASSES THE ADDRESS OF THE CURRENT TABLE FROM THE MAIN DB COPY - ANY CHANGES
 	#WILL IMMEDIATLY EFFECT THE MAIN DB COPY FROM TABLE NAVIGATION
-	table_data = data_dict
+	table_dict = table_data
 
 
 func _on_visibility_changed() -> void:

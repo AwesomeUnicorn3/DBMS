@@ -9,13 +9,10 @@ const ROW_DEFAULT_DICT: Dictionary = { "DEFAULT_FIRST_COLUMN_NAME" : "Default Na
 const COLUMN_DEFAULT_DICT: Dictionary = {DISPLAY_ORDER : 1, DATATYPE : 3, "is_unique" : true}
 const TBL_DEFAULT_TABLE: Dictionary = {ROW : {"DEFAULT_FIRST_KEY_NAME" :  ROW_DEFAULT_DICT}, COLUMN : {"DEFAULT_FIRST_COLUMN_NAME" : COLUMN_DEFAULT_DICT}}
 
-var main_db: Dictionary = {}
-var save_path: String = "res://"
-var ext: String = ".json"
 
 
-func get_table_list() -> Array:
-	return main_db.keys()
+static func get_table_list(db_dict: Dictionary) -> Array:
+	return db_dict.keys()
 
 
 func update_field(new_value: Variant, table: Dictionary, key_name: String, column_name: String) -> bool:
@@ -160,12 +157,12 @@ func delete_column(column_name: String, table: Dictionary) -> bool:
 	return success
 
 
-func add_new_table(new_table_name: String, database: Dictionary) -> bool:
+func add_new_table(new_table_name: String, db_dict: Dictionary) -> bool:
 	var success: bool = true
 	var new_table: Dictionary = TBL_DEFAULT_TABLE.duplicate_deep()
 	
 	# CHECK FOR DUPLICATE TABLE NAME
-	for table_name in database.keys():
+	for table_name in db_dict.keys():
 		if table_name == new_table_name:
 			print("ERROR: TABLE ALREADY EXISTS")
 			return !success
@@ -174,19 +171,19 @@ func add_new_table(new_table_name: String, database: Dictionary) -> bool:
 	
 	
 	# ADD TO TBL_Table_List
-	if !add_row(new_table_name,{}, main_db[TABLE_LIST]):
+	if !add_row(new_table_name,{}, db_dict[TABLE_LIST]):
 		return !success
 
 	# ADD TO DATABASE DICTIONARY
-	database[new_table_name] = new_table
+	db_dict[new_table_name] = new_table
 	
 	return success
 
 
-func delete_table(table_name: String, database: Dictionary) -> bool:
+func delete_table(table_name: String, db_dict: Dictionary, save_path, ext) -> bool:
 	var success: bool = true
 
-	if !database.has(table_name):
+	if !db_dict.has(table_name):
 		print("ERROR: TABLE DOES NOT EXIST IN THE DATABASE")
 		return !success
 	
@@ -194,16 +191,16 @@ func delete_table(table_name: String, database: Dictionary) -> bool:
 		print("ERROR: TABLE FILE DOES NOT EXIST")
 		return !success
 	
-	if !delete_row(table_name, main_db[TABLE_LIST]):
+	if !delete_row(table_name, db_dict[TABLE_LIST]):
 		return !success
 	
-	delete_file_from_disk(table_name, ext)
-	database.erase(table_name)
+	delete_file_from_disk(table_name, save_path, ext)
+	db_dict.erase(table_name)
 	
 	return success
 
 
-func load_file(file_name) -> Dictionary:
+static func load_file(save_path, file_name, ext) -> Dictionary:
 	var return_dict: Dictionary = {}
 	var file: FileAccess = FileAccess.open(save_path + file_name + ext, FileAccess.READ)
 	var load_json_string = file.get_as_text()
@@ -221,7 +218,7 @@ func load_file(file_name) -> Dictionary:
 
 
 
-func save_file_to_disk(table_name: String) -> bool:
+static func save_file_to_disk(save_path, ext, table_name: String, db_dict: Dictionary) -> bool:
 	var success: bool = true
 	var save_file = FileAccess.open(save_path + table_name + ext,FileAccess.WRITE)
 	if save_file == null:
@@ -229,47 +226,43 @@ func save_file_to_disk(table_name: String) -> bool:
 		print("ERROR: FILE DOES NOT EXIST AT THIS PATH OR CAN'T BE OPENED")
 		return !success
 	
-	var save_json_string = JSON.stringify(main_db[table_name], " ")
+	var save_json_string = JSON.stringify(db_dict[table_name], " ")
 	save_file.store_string(save_json_string)
 	save_file.close()
 	
 	return success
 
 
-func delete_file_from_disk(file_name: String, file_extension: String) -> bool:
+func delete_file_from_disk(save_path, file_name: String, file_extension: String) -> bool:
 	var success: bool = DirAccess.remove_absolute(save_path + file_name + file_extension)
 	
 	return success
 
 
-func update_main_db(new_db_dict: Dictionary, save_to_disk: bool = true) -> void:
+#func update_main_db(new_db_dict: Dictionary, save_to_disk: bool = true) -> void:
 	#I WANT TO UPDATE THIS WHERE YOU CAN PASS IN ONLY TABLES THAT WERE
 	#UPDATED SINCE LAST SAVE. NOT REALLY WORTH THE EFFORT RIGHT NOW
-	main_db = new_db_dict.duplicate_deep()
-	if save_to_disk:
-		save_database()
+#	main_db = new_db_dict.duplicate_deep()
+#	if save_to_disk:
+#		save_database()
 
 
-func save_database() -> bool:
+static func save_database(save_dir, ext,  db_dict: Dictionary) -> bool:
 	var success: bool = true
-	for tbl in main_db.keys():
-		if !save_file_to_disk(tbl):
+	for tbl in db_dict.keys():
+		if !save_file_to_disk(save_dir, ext, tbl, db_dict):
 			print("ERROR: ", tbl, " NOT SAVED. CONTINUING WITH NEXT TABLE")
 	
 	return success
 
 
-func load_database() -> bool:
-	var success: bool = true
-	var table_list: Dictionary = load_file(TABLE_LIST)
-	
-	if table_list == {}:
-		print("ERROR LOADING TABLE LIST") 
-		return !success
+static func load_database(db_dir, ext) -> Dictionary:
+	var table_list: Dictionary = load_file(db_dir, TABLE_LIST, ext)
+	var db_dict: Dictionary = {}
 	
 	for table_name in table_list[ROW].keys():
-		main_db[table_name]  = load_file(table_name)
-		if main_db[table_name] == {}:
+		db_dict[table_name]  = load_file(db_dir, table_name, ext)
+		if db_dict[table_name] == {}:
 			print("ERROR: TABLE 'TABLE NAME' IS EMPTY IN DATABASE. CONTINUING WITH NEXT TABLE")
 	
-	return success
+	return db_dict

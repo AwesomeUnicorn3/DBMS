@@ -1,17 +1,17 @@
 extends Control
 
 @onready var table_navigation: VBoxContainer = %TableNavigation
-@onready var DB: DBManager = DBManager.new()
+#@onready var DB: DBManager = DBManager.new()
 @onready var save_button: Button = %SaveButton
 @onready var exit_button: Button = %ExitButton
-
+var main_db_dict: Dictionary = {}
 
 func _ready() -> void:
 	save_button.button_up.connect(_on_save_button_pressed)
-	DB.load_database()
-	table_navigation.set_table_list(DB.get_table_list())
+	main_db_dict = DBManager.load_database("res://", ".json")
+	table_navigation.set_table_list(DBManager.get_table_list(main_db_dict))
 	table_navigation.add_table_buttons()
-	table_navigation.set_table_data(DB.main_db)
+	table_navigation.set_table_data(main_db_dict)
 
 
 func _on_exit_button_pressed() -> void:
@@ -20,5 +20,5 @@ func _on_exit_button_pressed() -> void:
 
 func _on_save_button_pressed() -> bool:
 	var success = true
-	DB.update_main_db(table_navigation.save_table_data())
+	DBManager.save_database("res://", ".json", main_db_dict)
 	return success

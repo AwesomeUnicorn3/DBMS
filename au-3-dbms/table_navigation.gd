@@ -10,17 +10,17 @@ var active_table_name: String = ""
 var open_table_dict: Dictionary = {}
 #THIS IS THE MAIN DB THAT WILL BE USED TO CHANGE DATA BY ALL SCRIPTS. ONCE WE ARE READY
 #TO SAVE THE DB TO DISK, WE WILL PASS THIS ONE TO THE DBMANAGER
-var DB_copy: Dictionary = {}
+var main_db: Dictionary = {}
 
 
 func set_table_data(data_dict: Dictionary) -> void:
-	DB_copy = data_dict.duplicate_deep()
+	main_db = data_dict
 
 
 func save_table_data() -> Dictionary:
 	for tbl_nm: String in open_table_dict:
-		DB_copy[tbl_nm] = open_table_dict[tbl_nm].save_data()
-	return DB_copy
+		main_db[tbl_nm] = open_table_dict[tbl_nm].save_data()
+	return main_db
 
 
 func add_table_buttons() -> void:
@@ -39,7 +39,7 @@ func update_table(button):
 func load_table_template(table_name: String) -> TableDisplay:
 	var new_table_display: Control = table_template.instantiate()
 	self.add_child(new_table_display)
-	new_table_display.load_table_data(table_name, DB_copy[table_name])
+	new_table_display.load_table_data(table_name, main_db[table_name])
 	open_table_dict[table_name] = new_table_display
 	
 	return new_table_display
