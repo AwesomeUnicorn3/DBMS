@@ -4,7 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://16mv85b742gj" path="res://TableButton.tscn" id="2_r0du0"]
 [ext_resource type="PackedScene" uid="uid://dyn1ohyb8gtj4" path="res://TableNavigation.tscn" id="2_uu6xs"]
 
-[node name="Main" type="ColorRect" unique_id=2027583315]
+[node name="Main" type="Control" unique_id=251616251]
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -12,8 +13,16 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color(0.018266678, 0.011169434, 0.23828125, 1)
 script = ExtResource("1_glv2v")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=285185286]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.140625, 0, 0.092285156, 1)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1327935436]
 layout_mode = 1
@@ -22,13 +31,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="ProjectNameLabel" type="Label" parent="VBoxContainer" unique_id=400179237]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-text = "AU3 DBMS"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="Spacer1" type="Label" parent="VBoxContainer" unique_id=719597488]
 visible = false
@@ -42,7 +44,16 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "SAVE"
 
+[node name="ProjectNameLabel" type="Label" parent="VBoxContainer/ProgramControls" unique_id=400179237]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "AU3 DBMS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Spacer" type="Label" parent="VBoxContainer/ProgramControls" unique_id=834136260]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 horizontal_alignment = 1
@@ -62,3 +73,5 @@ text = "AU3 DBMS V0.01"
 horizontal_alignment = 1
 
 [connection signal="pressed" from="VBoxContainer/ProgramControls/ExitButton" to="." method="_on_exit_button_pressed"]
+
+[editable path="VBoxContainer/TableNavigation"]

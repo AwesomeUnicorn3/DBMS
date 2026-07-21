@@ -1,6 +1,6 @@
 extends Control
 
-@onready var table_navigation: VBoxContainer = %TableNavigation
+@onready var table_navigation: HBoxContainer = %TableNavigation
 @onready var save_button: Button = %SaveButton
 @onready var exit_button: Button = %ExitButton
 var main_db_dict: Dictionary = {}

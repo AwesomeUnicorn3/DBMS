@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c1akec8jyx7n4" path="res://table_navigation.gd" id="1_x3wkh"]
 
-[node name="TableNavigation" type="VBoxContainer" unique_id=2109710735]
+[node name="TableNavigation" type="HBoxContainer" unique_id=1096675501]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -12,12 +12,33 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_x3wkh")
 
-[node name="TableButtonScroll" type="ScrollContainer" parent="." unique_id=737679106]
-custom_minimum_size = Vector2(0, 50)
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1290578936]
 layout_mode = 2
 
-[node name="TableButtons" type="HBoxContainer" parent="TableButtonScroll" unique_id=379769488]
-unique_name_in_owner = true
+[node name="Button" type="Button" parent="VBoxContainer" unique_id=1188265317]
+layout_mode = 2
+text = "Hide"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer" unique_id=84796965]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TableButtonContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer" unique_id=814925952]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="HBoxContainer" type="VBoxContainer" parent="." unique_id=793040947]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TableButtonScroll" type="ScrollContainer" parent="HBoxContainer" unique_id=737679106]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="TableButtons" type="HBoxContainer" parent="HBoxContainer/TableButtonScroll" unique_id=379769488]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[connection signal="button_down" from="VBoxContainer/Button" to="." method="_on_button_button_down"]
